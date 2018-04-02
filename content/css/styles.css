@@ -56,6 +56,9 @@ h1,h2,h3{
   border-radius: 8px;
   margin: 5px;
   background: #EEEEEE;
+  /*
+  overflow: hidden;
+  */
 }
 
 .content button,
@@ -124,4 +127,45 @@ h1,h2,h3{
 
 .orange {
   color: orange;
+}
+
+.main.ng-enter {
+  transition: 1.0s linear all;
+  opacity: 0;
+}
+
+.main.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.content li.ng-leave {
+  transition: 0.5s linear all;
+  transform: translateX(0px);
+  opacity: 1;
+}
+
+.content li.ng-leave-active {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.content li.ng-leave-stagger {
+  transition-delay: 0.2s;
+  transition-duration: 0s;
+}
+
+.content li.ng-enter {
+  transition: 0.5s linear all;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.content li.ng-enter-active {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.content input[disabled='disabled'] {
+  opacity: 0.5;
+  cursor: not-allowed !important;
 }

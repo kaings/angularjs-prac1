@@ -1,4 +1,4 @@
-var prac1 = angular.module('myPrac1',['ngRoute']);
+var prac1 = angular.module('myPrac1',['ngRoute', 'ngAnimate']);
 
 prac1.config(['$routeProvider', function($routeProvider){
   $routeProvider
@@ -11,13 +11,17 @@ prac1.config(['$routeProvider', function($routeProvider){
     controller: 'myPrac1Controller'
   })
   .when('/contact', {
-    templateUrl: 'view/contact.html'
+    templateUrl: 'view/contact.html',
+    controller: 'myPrac1ContactController'
+  })
+  .when('/contact-success', {
+    templateUrl: 'view/contact-success.html',
+    controller: 'myPrac1ContactController'
   }).otherwise({
     redirectTo: '/home'
   });
 
 }]);
-
 
 prac1.controller('myPrac1Controller', ['$scope', '$http', function($scope, $http){
 
@@ -25,11 +29,9 @@ $http.get('../../data/sports.json').then(function(result){
   $scope.sports = result.data;
 });
 
-
 $scope.removeSport = function(sport){
   $scope.sports.splice($scope.sports.indexOf(sport), 1);
 };
-
 
 $scope.addSport = function(){
   $scope.sports.push({
@@ -46,47 +48,30 @@ $scope.addSport = function(){
   $scope.newsport.marking='';
 };
 
+$scope.removeAll = function(){
+  $scope.sports = [];
+};
 
+}]);
 
+prac1.directive('randomSport', [function(){
+  return {
+    restrict: 'E',
+    scope: {
+      sports: '=',
+      title: '='
+    },
+    //template: '<img ng-src="{{sports[1].thumb}}" />',
+    templateUrl: '../../view/random.html',
+    transclude: true,
+    controller: function($scope){
+      $scope.random = Math.floor(Math.random()*5);
+    }
+  };
+}]);
 
-//
-// $scope.sports = [{
-// 	"name": "swimming",
-// 	"level": 2,
-// 	"cost": 200,
-// 	"active": true,
-// 	"marking": "black",
-// 	"thumb": "content/img/swimming.png"
-// }, {
-// 	"name": "badminton",
-// 	"level": 1,
-// 	"cost": 150,
-// 	"active": true,
-// 	"marking": "green",
-// 	"thumb": "content/img/badminton.png"
-// }, {
-// 	"name": "tennis",
-// 	"level": 2,
-// 	"cost": 200,
-// 	"active": false,
-// 	"marking": "blue",
-// 	"thumb": "content/img/tennis.png"
-// }, {
-// 	"name": "marathon",
-// 	"level": 3,
-// 	"cost": 300,
-// 	"active": true,
-// 	"marking": "orange",
-// 	"thumb": "content/img/marathon.png"
-// }, {
-// 	"name": "basketball",
-// 	"level": 4,
-// 	"cost": 500,
-// 	"active": true,
-// 	"marking": "green",
-// 	"thumb": "content/img/basketball.png"
-// }];
-
-
-
+prac1.controller('myPrac1ContactController',['$scope', '$location', function($scope, $location){
+  $scope.sendMessage = function(){
+    $location.path('/contact-success');
+  }
 }]);
