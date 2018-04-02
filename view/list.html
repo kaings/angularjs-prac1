@@ -1,0 +1,25 @@
+<div class="content">
+  <div ng-controller="myPrac1Controller">
+    <input ng-model="keyword" />
+    <button ng-click="order='name'">Order by Name</button>
+    <button ng-click="order='level'">Order by Level</button>
+    <ul>
+      <li ng-repeat="sport in sports | orderBy: order | filter: keyword" ng-show="sport.active">
+        <img ng-src="{{sport.thumb}}" style="margin:-12px 10px 0 0; float:left; width:50px" ng-show="sport.thumb" />
+        <h3>{{sport.name}} at {{sport.cost | currency:'$ '}}</h3>
+        <div class="remove" ng-click="removeSport(sport)">x</div>
+        <span class="belt" style="background: {{sport.marking}} ">{{sport.marking}}</span>
+      </li>
+    </ul>
+
+    <div>
+      <form ng-submit="addSport()">
+        <input type="text" placeholder="name" ng-model="newsport.name" />
+        <input type="text" placeholder="level" ng-model="newsport.level" />
+        <input type="text" placeholder="cost" ng-model="newsport.cost" />
+        <input type="text" placeholder="color marking" ng-model="newsport.marking" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </div>
+</div>
